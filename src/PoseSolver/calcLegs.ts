@@ -3,7 +3,7 @@ import { clamp } from "../utils/helpers";
 import { Results } from "../Types";
 
 /**
- * Calculates arm rotation as euler angles
+ * Calculates leg rotation as euler angles
  * TODO: Make angles more accurate in all rotation axis
  * @param {Results} lm : array of 3D pose vectors from tfjs or mediapipe
  */
