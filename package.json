@@ -14,7 +14,8 @@
         "build:lib": "tsc -p .",
         "serve": "vite",
         "prepare": "npm run build",
-        "fmt": "prettier --write 'src/**/*.ts'"
+        "fmt": "prettier --write 'src/**/*.ts'",
+        "test": "jest"
     },
     "dependencies": {
         "@mediapipe/camera_utils": "^0.3.1632432234",
@@ -24,8 +25,12 @@
         "three": "^0.133.0"
     },
     "devDependencies": {
+        "@types/jest": "^27.0.3",
+        "@types/lodash.clonedeep": "^4.5.6",
+        "lodash.clonedeep": "^4.5.0",
         "prettier": "^2.4.1",
         "rollup-plugin-friendly-type-imports": "^1.0.1",
+        "ts-jest": "^27.1.1",
         "typescript": "^4.4.4",
         "vite": "2.6.0",
         "vite-plugin-banner": "0.1.3",
