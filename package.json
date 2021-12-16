@@ -11,11 +11,14 @@
         "dev": "vite docs",
         "prebuild": "rm -rf dist lib",
         "build": "vite build && npm run build:lib",
+        "build:watch": "vite build --watch",
         "build:lib": "tsc -p .",
+        "build:lib:watch": "tsc-watch -p .",
         "serve": "vite",
         "prepare": "npm run build",
         "fmt": "prettier --write 'src/**/*.ts'",
-        "test": "jest"
+        "test": "jest",
+        "test:watch": "jest -o --watch "
     },
     "dependencies": {
         "@mediapipe/camera_utils": "^0.3.1632432234",
@@ -31,6 +34,7 @@
         "prettier": "^2.4.1",
         "rollup-plugin-friendly-type-imports": "^1.0.1",
         "ts-jest": "^27.1.1",
+        "tsc-watch": "^4.5.0",
         "typescript": "^4.4.4",
         "vite": "2.6.0",
         "vite-plugin-banner": "0.1.3",
