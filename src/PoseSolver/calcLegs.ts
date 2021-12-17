@@ -2,22 +2,43 @@ import Vector from "../utils/vector";
 import { clamp } from "../utils/helpers";
 import { Results } from "../Types";
 
+export const offsets = {
+    upperLeg: {
+        z: 0.2
+    } 
+}
+
 /**
  * Calculates leg rotation as euler angles
  * TODO: Make angles more accurate in all rotation axis
  * @param {Results} lm : array of 3D pose vectors from tfjs or mediapipe
  */
 export const calcLegs = (lm: Results) => {
-    // LEGS WIP //
-    let UpperLeg = {
-        r: Vector.findRotation(lm[23], lm[25]),
-        l: Vector.findRotation(lm[24], lm[26]),
+    const UpperLeg = {
+        r: new Vector({
+            x: Vector.thetaPhiFrom3DCoords(lm[11], lm[23], lm[25]).theta,
+            y: 0,
+            z: Vector.thetaPhiFrom3DCoords(lm[11], lm[23], lm[25]).phi
+        }),
+        l: new Vector({
+            x: Vector.thetaPhiFrom3DCoords(lm[12], lm[24], lm[26]).theta,
+            y: 0,
+            z: Vector.thetaPhiFrom3DCoords(lm[12], lm[24], lm[26]).phi
+        })
     };
-    //recenter
-    UpperLeg.r.z = clamp(UpperLeg.r.z - 0.5, -0.5, 0);
-    UpperLeg.r.y = 0; //Y Axis is not correct
-    UpperLeg.l.z = clamp(UpperLeg.l.z - 0.5, -0.5, 0);
-    UpperLeg.l.y = 0; //Y Axis is not correct
+
+    // const LowerLeg = {
+    //     r: new Vector({
+    //         x: Vector.thetaPhiFrom3DCoords(lm[23], lm[25], lm[27]).theta,
+    //         y: 0,
+    //         z: Vector.thetaPhiFrom3DCoords(lm[23], lm[25], lm[27]).phi
+    //     }),
+    //     l: new Vector({
+    //         x: Vector.thetaPhiFrom3DCoords(lm[24], lm[26], lm[28]).theta,
+    //         y: 0,
+    //         z: Vector.thetaPhiFrom3DCoords(lm[24], lm[26], lm[28]).phi
+    //     })
+    // };
 
     let LowerLeg = {
         r: Vector.findRotation(lm[25], lm[27]),
@@ -46,8 +67,8 @@ export const calcLegs = (lm: Results) => {
         },
         //Unscaled
         Unscaled: {
-            UpperArm: UpperLeg,
-            LowerLeg: LowerLeg,
+             UpperLeg,
+             LowerLeg,
         },
     };
 };
@@ -60,12 +81,20 @@ export const calcLegs = (lm: Results) => {
  */
 export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side = "Right") => {
     let invert = side === "Right" ? 1 : -1;
-    UpperLeg.z = UpperLeg.z * -2.3 * invert;
-    UpperLeg.x = clamp(UpperLeg.z * 0.1 * invert, -0.5, Math.PI);
-    LowerLeg.x = LowerLeg.x * -2.14 * 1.3;
+    let rigedUpperLeg = new Vector ({
+        x: UpperLeg.x,
+        y: 0,
+        z: UpperLeg.z + invert * offsets.upperLeg.z
+        })
+    let rigedLowerLeg = new Vector ({
+        x: -LowerLeg.x * Math.PI,
+        y: 0,
+        z: LowerLeg.z,
+    })
+
     return {
         // do not use. leg values are inaccurate
-        UpperLeg: UpperLeg,
-        LowerLeg: LowerLeg,
+        UpperLeg: rigedUpperLeg,
+        LowerLeg: rigedLowerLeg,
     };
 };

@@ -392,7 +392,9 @@ export default class Vector {
     }
     /**
      * Find angle between 3D Coordinates
-     * @param {Vector | number} a:
+     * @param {Vector | number} a: Vector or Number
+     * @param {Vector | number} b: Vector or Number
+     * @param {Vector | number} c: Vector or Number
      */
     static angleBetween3DCoords(
         a: Vector | Record<"x" | "y" | "z", number>,
@@ -425,5 +427,47 @@ export default class Vector {
 
         // return single angle Normalized to 1
         return Vector.normalizeRadians(angle);
+    }
+    /**
+     * Get relative spherical coordinates for the vector bc with the given points a,b,c
+     * @param {Vector | number} a: Vector or Number
+     * @param {Vector | number} b: Vector or Number
+     * @param {Vector | number} c: Vector or Number
+     */
+    static thetaPhiFrom3DCoords(
+        a: Vector | Record<"x" | "y" | "z", number>,
+        b: Vector | Record<"x" | "y" | "z", number>,
+        c: Vector | Record<"x" | "y" | "z", number>
+    ) {
+        if (!(a instanceof Vector)) {
+            a = new Vector(a);
+            b = new Vector(b);
+            c = new Vector(c);
+        }
+        const a1 = new Vector({x:a.y, y: a.z, z: a.x})
+        const b1 = new Vector({x:b.y, y: b.z, z: b.x})
+        const c1 = new Vector({x:c.y, y: c.z, z: c.x})
+        // Calculate vector between points 1 and 2
+        const v1 = (a1 as Vector).subtract(b1 as Vector);
+
+        // Calculate vector between points 2 and 3
+        const v2 = (c1 as Vector).subtract(b1 as Vector);
+
+        const v1norm = v1.unit();
+        const v2norm = v2.unit();
+
+        const theta1 = Math.atan2(v1norm.y, v1norm.x)
+        const phi1 = Math.acos(v1norm.z / 1)
+
+        const theta2 = Math.atan2(v2norm.y, v2norm.x)
+        const phi2 = Math.acos(v2norm.z / 1)
+      
+        const theta = theta1 - theta2 - Math.PI 
+        const phi = phi1 - phi2
+
+        return {
+            theta,
+            phi
+        };
     }
 }
