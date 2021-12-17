@@ -26,9 +26,7 @@ describe("should resolve the correct leg rotation for", () => {
   
         expect(result.UpperLeg.l.x).toBe(PI / 2)
         expect(result.Unscaled.UpperLeg.l.x).toBe(PI / 2)
-
-        const offset = offsets.upperLeg.z
-    
+  
         expect(round(result.UpperLeg.l.z)).toBe(round((-PI / 4 - offsets.upperLeg.z)))
         expect(round(result.Unscaled.UpperLeg.l.z)).toBe(round(-PI / 4))
     })
