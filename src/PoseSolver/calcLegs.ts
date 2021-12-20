@@ -16,14 +16,14 @@ export const offsets = {
 export const calcLegs = (lm: Results) => {
     const UpperLeg = {
         r: new Vector({
-            x: Vector.thetaPhiFrom3DCoords(lm[11], lm[23], lm[25]).theta,
+            x: Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]).theta,
             y: 0,
-            z: Vector.thetaPhiFrom3DCoords(lm[11], lm[23], lm[25]).phi
+            z: Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]).phi
         }),
         l: new Vector({
-            x: Vector.thetaPhiFrom3DCoords(lm[12], lm[24], lm[26]).theta,
+            x: Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]).theta,
             y: 0,
-            z: Vector.thetaPhiFrom3DCoords(lm[12], lm[24], lm[26]).phi
+            z: Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]).phi
         })
     };
 

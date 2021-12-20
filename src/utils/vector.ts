@@ -1,4 +1,4 @@
-import { XYZ } from "../Types";
+import { XYZ, AxisMap } from "../Types";
 
 /** Vector Math class. */
 export default class Vector {
@@ -137,15 +137,15 @@ export default class Vector {
     }
     /**
      * To Angles
+     * @param {AxisMap} [axisMap = {x: "x", y: "y", z: "z"}]
      * @returns {{ theta: number, phi: number }}
      */
-    toAngles() {
+    toSphericalCoords(axisMap: AxisMap = {x: "x", y: "y", z: "z"} ) {
         return {
-            theta: Math.atan2(this.z, this.x),
-            phi: Math.asin(this.y / this.length()),
-        };
+            theta: Math.atan2(this[axisMap.y], this[axisMap.x]),
+            phi: Math.acos(this[axisMap.z] / this.length()),
+        }  
     }
-
     angleTo(a: Vector) {
         return Math.acos(this.dot(a) / (this.length() * a.length()));
     }
@@ -444,24 +444,19 @@ export default class Vector {
             b = new Vector(b);
             c = new Vector(c);
         }
-        const a1 = new Vector({x:a.y, y: a.z, z: a.x})
-        const b1 = new Vector({x:b.y, y: b.z, z: b.x})
-        const c1 = new Vector({x:c.y, y: c.z, z: c.x})
+
         // Calculate vector between points 1 and 2
-        const v1 = (a1 as Vector).subtract(b1 as Vector);
+        const v1 = (a as Vector).subtract(b as Vector);
 
         // Calculate vector between points 2 and 3
-        const v2 = (c1 as Vector).subtract(b1 as Vector);
+        const v2 = (c as Vector).subtract(b as Vector);
 
         const v1norm = v1.unit();
         const v2norm = v2.unit();
 
-        const theta1 = Math.atan2(v1norm.y, v1norm.x)
-        const phi1 = Math.acos(v1norm.z / 1)
+        const { theta: theta1, phi: phi1 } = v1norm.toSphericalCoords({x:"y", y:"z", z:"x"})        
+        const { theta: theta2, phi: phi2 } = v2norm.toSphericalCoords({x:"y", y:"z", z:"x"})
 
-        const theta2 = Math.atan2(v2norm.y, v2norm.x)
-        const phi2 = Math.acos(v2norm.z / 1)
-      
         const theta = theta1 - theta2 - Math.PI 
         const phi = phi1 - phi2
 

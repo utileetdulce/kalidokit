@@ -44,6 +44,8 @@ export interface IPoseSolveOptions extends ISolveOptions {
 
 export type XYZ = Record<"x" | "y" | "z", number>;
 
+export type AxisMap = Record<"x" | "y" | "z", "x" | "y" | "z">;
+
 export type LR<T = Vector> = Record<"l" | "r", T>;
 
 export interface IHips {
