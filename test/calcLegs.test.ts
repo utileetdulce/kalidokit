@@ -64,8 +64,7 @@ describe("should resolve the correct leg rotation for", () => {
     })
 })
 
-function round(value:number){
-    const decimals = 3
+function round(value:number, decimals:number = 3){
     const factor = Math.pow(10,decimals)
     return Math.round(value * factor) / factor
 }
