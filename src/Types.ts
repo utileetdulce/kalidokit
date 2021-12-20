@@ -119,7 +119,7 @@ export type TFace = {
             O: number;
             U: number;
         };
-    }
+    };
 };
 
 /**
@@ -137,3 +137,8 @@ export type TFVectorPose = Array<{
  * Array of results from TFJS or MediaPipe
  */
 export type Results = Array<XYZ>;
+
+/**
+ * The left or the right side 
+ */
+export type Side = "Left" | "Right";

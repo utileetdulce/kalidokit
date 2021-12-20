@@ -1,6 +1,6 @@
 import Vector from "../utils/vector";
 import { clamp } from "../utils/helpers";
-import { Results } from "../Types";
+import { Results, Side } from "../Types";
 
 export const offsets = {
     upperLeg: {
@@ -79,7 +79,7 @@ export const calcLegs = (lm: Results) => {
  * @param {Object} LowerLeg : normalized rotation values
  * @param {String} side : "Left" or "Right"
  */
-export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side = "Right") => {
+export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side:Side = "Right") => {
     let invert = side === "Right" ? 1 : -1;
     let rigedUpperLeg = new Vector({
         x: UpperLeg.x,
