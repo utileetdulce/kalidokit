@@ -146,6 +146,11 @@ export default class Vector {
             phi: Math.acos(this[axisMap.z] / this.length()),
         }  
     }
+    /**
+     * Returns the angle between this vector and vector a in radians.
+     * @param {Vector} a: Vector
+     * @returns {number}
+     */
     angleTo(a: Vector) {
         return Math.acos(this.dot(a) / (this.length() * a.length()));
     }
