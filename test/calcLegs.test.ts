@@ -18,10 +18,6 @@ describe("should resolve the correct leg rotation for", () => {
         worldLandmarks[24] = {x:0, y: 0, z: 0}
         worldLandmarks[26] = {x:-0.4, y: 0, z: -0.4}
 
-        worldLandmarks[11] = {x:0, y: -0.4, z: 0}
-        worldLandmarks[23] = {x:0, y: 0, z: 0}
-        worldLandmarks[25] = {x:-0.4, y: 0, z: -0.4}
-
         const result = calcLegs(worldLandmarks)
   
         expect(result.UpperLeg.l.x).toBe(PI / 2)
@@ -35,10 +31,6 @@ describe("should resolve the correct leg rotation for", () => {
         worldLandmarks[11] = {x:0, y: -0.4, z: 0}
         worldLandmarks[23] = {x:0, y: 0, z: 0}
         worldLandmarks[25] = {x:-0.4, y: 0, z: -0.4}
-
-        worldLandmarks[12] = {x:0, y: -0.4, z: 0}
-        worldLandmarks[24] = {x:0, y: 0, z: 0}
-        worldLandmarks[26] = {x:-0.4, y: 0, z: -0.4}
 
         const result = calcLegs(worldLandmarks)
   
