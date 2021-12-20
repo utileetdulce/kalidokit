@@ -128,7 +128,6 @@ export default class Vector {
     unit() {
         return this.divide(this.length());
     }
-
     min() {
         return Math.min(Math.min(this.x, this.y), this.z);
     }
@@ -140,11 +139,11 @@ export default class Vector {
      * @param {AxisMap} [axisMap = {x: "x", y: "y", z: "z"}]
      * @returns {{ theta: number, phi: number }}
      */
-    toSphericalCoords(axisMap: AxisMap = {x: "x", y: "y", z: "z"} ) {
+    toSphericalCoords(axisMap: AxisMap = { x: "x", y: "y", z: "z" }) {
         return {
             theta: Math.atan2(this[axisMap.y], this[axisMap.x]),
             phi: Math.acos(this[axisMap.z] / this.length()),
-        }  
+        };
     }
     /**
      * Returns the angle between this vector and vector a in radians.
@@ -154,7 +153,6 @@ export default class Vector {
     angleTo(a: Vector) {
         return Math.acos(this.dot(a) / (this.length() * a.length()));
     }
-
     /**
      * Array representation of the vector.
      * @param {number} n: Array length
@@ -192,7 +190,6 @@ export default class Vector {
         b.z = -a.z;
         return b;
     }
-
     static add(a: Vector, b: Vector | number, c: Vector = new Vector()) {
         if (b instanceof Vector) {
             c.x = a.x + b.x;
@@ -411,12 +408,10 @@ export default class Vector {
         const v1 = (a as Vector).subtract(b as Vector);
 
         // Calculate vector between points 2 and 3
-
         const v2 = (c as Vector).subtract(b as Vector);
 
         // The dot product of vectors v1 & v2 is a function of the cosine of the
         // angle between them (it's scaled by the product of their magnitudes).
-
         const v1norm = v1.unit();
         const v2norm = v2.unit();
 
@@ -451,15 +446,12 @@ export default class Vector {
         const v1norm = v1.unit();
         const v2norm = v2.unit();
 
-        const { theta: theta1, phi: phi1 } = v1norm.toSphericalCoords({x:"y", y:"z", z:"x"})        
-        const { theta: theta2, phi: phi2 } = v2norm.toSphericalCoords({x:"y", y:"z", z:"x"})
+        const { theta: theta1, phi: phi1 } = v1norm.toSphericalCoords({ x: "y", y: "z", z: "x" });
+        const { theta: theta2, phi: phi2 } = v2norm.toSphericalCoords({ x: "y", y: "z", z: "x" });
 
-        const theta = theta1 - theta2 - Math.PI 
-        const phi = phi1 - phi2
+        const theta = theta1 - theta2 - Math.PI;
+        const phi = phi1 - phi2;
 
-        return {
-            theta,
-            phi
-        };
+        return { theta, phi };
     }
 }
