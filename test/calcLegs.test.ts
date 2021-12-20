@@ -20,10 +20,10 @@ describe("should resolve the correct leg rotation for", () => {
         const result = calcLegs(worldLandmarks)
   
         expect(result.UpperLeg.l.x).toBe(PI / 2)
-        expect(result.Unscaled.UpperLeg.l.x).toBe(PI / 2)
+        expect(result.Unscaled.UpperLeg.l.x).toBe(0.5)
   
         expect(round(result.UpperLeg.l.z)).toBe(round((-PI / 4 - offsets.upperLeg.z)))
-        expect(round(result.Unscaled.UpperLeg.l.z)).toBe(round(-PI / 4))
+        expect(round(result.Unscaled.UpperLeg.l.z)).toBe(-0.25)
     })
 
     test("upper right leg", () => {
@@ -34,10 +34,10 @@ describe("should resolve the correct leg rotation for", () => {
         const result = calcLegs(worldLandmarks)
   
         expect(round(result.UpperLeg.r.x)).toBe(round(PI / 2))
-        expect(round(result.Unscaled.UpperLeg.r.x)).toBe(round(PI / 2))
+        expect(round(result.Unscaled.UpperLeg.r.x)).toBe(0.5)
 
         expect(round(result.UpperLeg.r.z)).toBe(round(-PI / 4 + offsets.upperLeg.z))
-        expect(round(result.Unscaled.UpperLeg.r.z)).toBe(round(-PI / 4))
+        expect(round(result.Unscaled.UpperLeg.r.z)).toBe(-0.25)
     })
 
     test("lower left leg", () => {
@@ -48,7 +48,7 @@ describe("should resolve the correct leg rotation for", () => {
         const result = calcLegs(worldLandmarks)
   
         expect(result.LowerLeg.l.x).toBe(-PI / 2)
-        expect(result.Unscaled.LowerLeg.l.x).toBe(0.5)
+        expect(result.Unscaled.LowerLeg.l.x).toBe(-0.5)
     })
 
     test("lower right leg", () => {
@@ -59,7 +59,7 @@ describe("should resolve the correct leg rotation for", () => {
         const result = calcLegs(worldLandmarks)
   
         expect(result.LowerLeg.r.x).toBe(-PI / 2)
-        expect(result.Unscaled.LowerLeg.r.x).toBe(0.5)
+        expect(result.Unscaled.LowerLeg.r.x).toBe(-0.5)
     })
 })
 

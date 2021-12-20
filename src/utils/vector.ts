@@ -425,12 +425,12 @@ export default class Vector {
         return Vector.normalizeRadians(angle);
     }
     /**
-     * Get relative spherical coordinates for the vector bc with the given points a,b,c
+     * Get normalized, spherical coordinates for the vector bc, relative to vector ab
      * @param {Vector | number} a: Vector or Number
      * @param {Vector | number} b: Vector or Number
      * @param {Vector | number} c: Vector or Number
      */
-    static getRelativeSphericalCoords(a: Vector | XYZ, b: Vector | XYZ, c: Vector | XYZ) {
+    static getRelativeSphericalCoords(a: Vector | XYZ, b: Vector | XYZ, c: Vector | XYZ, axisMap: AxisMap = { x: "x", y: "y", z: "z" }) {
         if (!(a instanceof Vector)) {
             a = new Vector(a);
             b = new Vector(b);
@@ -446,12 +446,15 @@ export default class Vector {
         const v1norm = v1.unit();
         const v2norm = v2.unit();
 
-        const { theta: theta1, phi: phi1 } = v1norm.toSphericalCoords({ x: "y", y: "z", z: "x" });
-        const { theta: theta2, phi: phi2 } = v2norm.toSphericalCoords({ x: "y", y: "z", z: "x" });
+        const { theta: theta1, phi: phi1 } = v1norm.toSphericalCoords(axisMap);
+        const { theta: theta2, phi: phi2 } = v2norm.toSphericalCoords(axisMap);
 
         const theta = theta1 - theta2 - Math.PI;
-        const phi = phi1 - phi2;
-
-        return { theta, phi };
+        const phi = phi1 - phi2;  
+    
+        return { 
+            theta: theta / Math.PI, //Vector.normalizeRadians(theta),
+            phi: phi / Math.PI //Vector.normalizeRadians(phi)
+         };
     }
 }

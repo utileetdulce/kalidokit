@@ -14,8 +14,8 @@ export const offsets = {
  * @param {Results} lm : array of 3D pose vectors from tfjs or mediapipe
  */
 export const calcLegs = (lm: Results) => {
-    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]);
-    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]);
+    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25], { x: "y", y: "z", z: "x" });
+    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26], { x: "y", y: "z", z: "x" });
     const UpperLeg = {
         r: new Vector({
             x: rightUpperLegSphericalCoords.theta,
@@ -29,29 +29,18 @@ export const calcLegs = (lm: Results) => {
         }),
     };
 
-    // const LowerLeg = {
-    //     r: new Vector({
-    //         x: Vector.thetaPhiFrom3DCoords(lm[23], lm[25], lm[27]).theta,
-    //         y: 0,
-    //         z: Vector.thetaPhiFrom3DCoords(lm[23], lm[25], lm[27]).phi
-    //     }),
-    //     l: new Vector({
-    //         x: Vector.thetaPhiFrom3DCoords(lm[24], lm[26], lm[28]).theta,
-    //         y: 0,
-    //         z: Vector.thetaPhiFrom3DCoords(lm[24], lm[26], lm[28]).phi
-    //     })
-    // };
-
-    let LowerLeg = {
-        r: Vector.findRotation(lm[25], lm[27]),
-        l: Vector.findRotation(lm[26], lm[28]),
+    const LowerLeg = {
+        r: new Vector({
+            x: -Vector.angleBetween3DCoords(lm[23], lm[25], lm[27]),
+            y: 0,
+            z: 0
+        }),
+        l: new Vector({
+            x: -Vector.angleBetween3DCoords(lm[24], lm[26], lm[28]),
+            y: 0, 
+            z: 0
+        })
     };
-    LowerLeg.r.x = Vector.angleBetween3DCoords(lm[23], lm[25], lm[27]);
-    LowerLeg.r.y = 0; // Y Axis not correct
-    LowerLeg.r.z = 0; // Z Axis not correct
-    LowerLeg.l.x = Vector.angleBetween3DCoords(lm[24], lm[26], lm[28]);
-    LowerLeg.l.y = 0; // Y Axis not correct
-    LowerLeg.l.z = 0; // Z Axis not correct
 
     //Modify Rotations slightly for more natural movement
     let rightLegRig = rigLeg(UpperLeg.r, LowerLeg.r, RIGHT);
@@ -84,14 +73,14 @@ export const calcLegs = (lm: Results) => {
 export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) => {
     let invert = side === RIGHT ? 1 : -1;
     let rigedUpperLeg = new Vector({
-        x: UpperLeg.x,
-        y: 0,
-        z: UpperLeg.z + invert * offsets.upperLeg.z,
+        x: UpperLeg.x * Math.PI,
+        y: UpperLeg.y * Math.PI,
+        z: UpperLeg.z * Math.PI + invert * offsets.upperLeg.z,
     });
     let rigedLowerLeg = new Vector({
-        x: -LowerLeg.x * Math.PI,
-        y: 0,
-        z: LowerLeg.z,
+        x: LowerLeg.x * Math.PI,
+        y: LowerLeg.y * Math.PI,
+        z: LowerLeg.z * Math.PI
     });
 
     return {
