@@ -4,9 +4,9 @@ import { Results } from "../Types";
 
 export const offsets = {
     upperLeg: {
-        z: 0.2
-    } 
-}
+        z: 0.2,
+    },
+};
 
 /**
  * Calculates leg rotation as euler angles
@@ -18,13 +18,13 @@ export const calcLegs = (lm: Results) => {
         r: new Vector({
             x: Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]).theta,
             y: 0,
-            z: Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]).phi
+            z: Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]).phi,
         }),
         l: new Vector({
             x: Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]).theta,
             y: 0,
-            z: Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]).phi
-        })
+            z: Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]).phi,
+        }),
     };
 
     // const LowerLeg = {
@@ -67,8 +67,8 @@ export const calcLegs = (lm: Results) => {
         },
         //Unscaled
         Unscaled: {
-             UpperLeg,
-             LowerLeg,
+            UpperLeg,
+            LowerLeg,
         },
     };
 };
@@ -81,16 +81,16 @@ export const calcLegs = (lm: Results) => {
  */
 export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side = "Right") => {
     let invert = side === "Right" ? 1 : -1;
-    let rigedUpperLeg = new Vector ({
+    let rigedUpperLeg = new Vector({
         x: UpperLeg.x,
         y: 0,
-        z: UpperLeg.z + invert * offsets.upperLeg.z
-        })
-    let rigedLowerLeg = new Vector ({
+        z: UpperLeg.z + invert * offsets.upperLeg.z,
+    });
+    let rigedLowerLeg = new Vector({
         x: -LowerLeg.x * Math.PI,
         y: 0,
         z: LowerLeg.z,
-    })
+    });
 
     return {
         // do not use. leg values are inaccurate
