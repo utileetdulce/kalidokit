@@ -1,6 +1,7 @@
 import Vector from "../utils/vector";
 import { Results, Side } from "../Types";
 import { RIGHT, LEFT } from "./../constants";
+import { PI } from "./../constants";
 
 export const offsets = {
     upperLeg: {
@@ -73,14 +74,14 @@ export const calcLegs = (lm: Results) => {
 export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) => {
     let invert = side === RIGHT ? 1 : -1;
     let rigedUpperLeg = new Vector({
-        x: UpperLeg.x * Math.PI,
-        y: UpperLeg.y * Math.PI,
-        z: UpperLeg.z * Math.PI + invert * offsets.upperLeg.z,
+        x: UpperLeg.x * PI,
+        y: UpperLeg.y * PI,
+        z: UpperLeg.z * PI + invert * offsets.upperLeg.z,
     });
     let rigedLowerLeg = new Vector({
-        x: LowerLeg.x * Math.PI,
-        y: LowerLeg.y * Math.PI,
-        z: LowerLeg.z * Math.PI
+        x: LowerLeg.x * PI,
+        y: LowerLeg.y * PI,
+        z: LowerLeg.z * PI
     });
 
     return {

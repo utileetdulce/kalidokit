@@ -1,6 +1,7 @@
 import Vector from "../utils/vector";
 import { clamp, remap } from "../utils/helpers";
 import { IHips, XYZ, TFVectorPose } from "../Types";
+import { PI } from "./../constants";
 
 /**
  * Calculates Hip rotation and world position
@@ -69,9 +70,9 @@ export const calcHips = (lm3d: TFVectorPose, lm2d: Omit<TFVectorPose, "z">) => {
  */
 export const rigHips = (hips: IHips, spine: Vector | XYZ) => {
     //convert normalized values to radians
-    hips.rotation!.x *= Math.PI;
-    hips.rotation!.y *= Math.PI;
-    hips.rotation!.z *= Math.PI;
+    hips.rotation!.x *= PI;
+    hips.rotation!.y *= PI;
+    hips.rotation!.z *= PI;
 
     hips.worldPosition = {
         x: hips.position.x * (0.5 + 1.8 * -hips.position.z),
@@ -79,9 +80,9 @@ export const rigHips = (hips: IHips, spine: Vector | XYZ) => {
         z: hips.position.z * (0.1 + hips.position.z * -2),
     };
 
-    spine.x *= Math.PI;
-    spine.y *= Math.PI;
-    spine.z *= Math.PI;
+    spine.x *= PI;
+    spine.y *= PI;
+    spine.z *= PI;
 
     return {
         Hips: hips,
