@@ -11,7 +11,7 @@
         "dev": "vite docs",
         "prebuild": "rm -rf dist lib",
         "build": "vite build && npm run build:lib",
-        "build:watch": "vite build --watch",
+        "build:watch": "vite build --watch && npm run build:lib:watch",
         "build:lib": "tsc -p .",
         "build:lib:watch": "tsc-watch -p .",
         "serve": "vite",
