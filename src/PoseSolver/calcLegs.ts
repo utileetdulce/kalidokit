@@ -1,6 +1,6 @@
 import Vector from "../utils/vector";
 import { Results, Side } from "../Types";
-import {RIGHT, LEFT} from "./../constants"
+import { RIGHT, LEFT } from "./../constants";
 
 export const offsets = {
     upperLeg: {
@@ -14,8 +14,8 @@ export const offsets = {
  * @param {Results} lm : array of 3D pose vectors from tfjs or mediapipe
  */
 export const calcLegs = (lm: Results) => {
-    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25])
-    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26])
+    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]);
+    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]);
     const UpperLeg = {
         r: new Vector({
             x: rightUpperLegSphericalCoords.theta,
@@ -81,7 +81,7 @@ export const calcLegs = (lm: Results) => {
  * @param {Object} LowerLeg : normalized rotation values
  * @param {Side} side : left or right
  */
-export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side:Side = RIGHT) => {
+export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) => {
     let invert = side === RIGHT ? 1 : -1;
     let rigedUpperLeg = new Vector({
         x: UpperLeg.x,

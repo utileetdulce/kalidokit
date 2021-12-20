@@ -1,7 +1,7 @@
 import Vector from "../utils/vector";
 import { clamp, remap } from "../utils/helpers";
 import { Results, XYZ, Side } from "../Types";
-import {RIGHT, LEFT} from "./../constants"
+import { RIGHT, LEFT } from "./../constants";
 
 /**
  * Landmark points labeled for eye, brow, and pupils

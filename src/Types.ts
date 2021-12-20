@@ -1,5 +1,5 @@
 import Vector from "./utils/vector";
-import {RIGHT, LEFT} from "./constants"
+import { RIGHT, LEFT } from "./constants";
 export interface ISolveOptions {
     /**
      * Runtime for the solver.

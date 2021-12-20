@@ -1,7 +1,7 @@
 import Vector from "../utils/vector";
 import { clamp } from "../utils/helpers";
 import { Results, THand, THandUnsafe, Side } from "../Types";
-import {RIGHT, LEFT} from "./../constants"
+import { RIGHT, LEFT } from "./../constants";
 
 /** Class representing hand solver. */
 export class HandSolver {
