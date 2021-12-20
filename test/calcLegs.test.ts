@@ -1,6 +1,5 @@
 const cloneDeep = require("lodash.clonedeep")
 import {calcLegs} from "../src/PoseSolver/calcLegs"
-import poseLandmarks from "./poseLandmarks"
 import poseWorldLandmarks from "./poseWorlLandmarks"
 import {Results} from "../src/Types"
 import {offsets} from "../src/PoseSolver/calcLegs"
