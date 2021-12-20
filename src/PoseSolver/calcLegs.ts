@@ -1,6 +1,6 @@
 import Vector from "../utils/vector";
-import { clamp } from "../utils/helpers";
 import { Results, Side } from "../Types";
+import {RIGHT, LEFT} from "./../constants"
 
 export const offsets = {
     upperLeg: {
@@ -14,16 +14,18 @@ export const offsets = {
  * @param {Results} lm : array of 3D pose vectors from tfjs or mediapipe
  */
 export const calcLegs = (lm: Results) => {
+    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25])
+    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26])
     const UpperLeg = {
         r: new Vector({
-            x: Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]).theta,
+            x: rightUpperLegSphericalCoords.theta,
             y: 0,
-            z: Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25]).phi,
+            z: rightUpperLegSphericalCoords.phi,
         }),
         l: new Vector({
-            x: Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]).theta,
+            x: leftUpperLegSphericalCoords.theta,
             y: 0,
-            z: Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26]).phi,
+            z: leftUpperLegSphericalCoords.phi,
         }),
     };
 
@@ -52,8 +54,8 @@ export const calcLegs = (lm: Results) => {
     LowerLeg.l.z = 0; // Z Axis not correct
 
     //Modify Rotations slightly for more natural movement
-    let rightLegRig = rigLeg(UpperLeg.r, LowerLeg.r, "Right");
-    let leftLegRig = rigLeg(UpperLeg.l, LowerLeg.l, "Left");
+    let rightLegRig = rigLeg(UpperLeg.r, LowerLeg.r, RIGHT);
+    let leftLegRig = rigLeg(UpperLeg.l, LowerLeg.l, LEFT);
 
     return {
         //Scaled
@@ -77,10 +79,10 @@ export const calcLegs = (lm: Results) => {
  * Converts normalized rotation values into radians clamped by human limits
  * @param {Object} UpperLeg : normalized rotation values
  * @param {Object} LowerLeg : normalized rotation values
- * @param {String} side : "Left" or "Right"
+ * @param {Side} side : left or right
  */
-export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side:Side = "Right") => {
-    let invert = side === "Right" ? 1 : -1;
+export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side:Side = RIGHT) => {
+    let invert = side === RIGHT ? 1 : -1;
     let rigedUpperLeg = new Vector({
         x: UpperLeg.x,
         y: 0,
@@ -93,7 +95,6 @@ export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side:Side = "Right") 
     });
 
     return {
-        // do not use. leg values are inaccurate
         UpperLeg: rigedUpperLeg,
         LowerLeg: rigedLowerLeg,
     };
