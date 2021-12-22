@@ -430,7 +430,12 @@ export default class Vector {
      * @param {Vector | number} b: Vector or Number
      * @param {Vector | number} c: Vector or Number
      */
-    static getRelativeSphericalCoords(a: Vector | XYZ, b: Vector | XYZ, c: Vector | XYZ, axisMap: AxisMap = { x: "x", y: "y", z: "z" }) {
+    static getRelativeSphericalCoords(
+        a: Vector | XYZ,
+        b: Vector | XYZ,
+        c: Vector | XYZ,
+        axisMap: AxisMap = { x: "x", y: "y", z: "z" }
+    ) {
         if (!(a instanceof Vector)) {
             a = new Vector(a);
             b = new Vector(b);
