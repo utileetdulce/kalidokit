@@ -80,8 +80,8 @@ export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) =
     });
     let rigedLowerLeg = new Vector({
         x: LowerLeg.x * PI,
-        y: LowerLeg.y * PI,
-        z: LowerLeg.z * PI
+        y: 0, // not relevant
+        z: 0, // not relevant
     });
 
     return {
