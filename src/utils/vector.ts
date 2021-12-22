@@ -443,7 +443,7 @@ export default class Vector {
         }
 
         // Calculate vector between points 1 and 2
-        const v1 = (a as Vector).subtract(b as Vector);
+        const v1 = (b as Vector).subtract(a as Vector);
 
         // Calculate vector between points 2 and 3
         const v2 = (c as Vector).subtract(b as Vector);
@@ -454,12 +454,12 @@ export default class Vector {
         const { theta: theta1, phi: phi1 } = v1norm.toSphericalCoords(axisMap);
         const { theta: theta2, phi: phi2 } = v2norm.toSphericalCoords(axisMap);
 
-        const theta = theta1 - theta2 - PI;
-        const phi = phi1 - phi2;  
+        const theta = theta1 - theta2;
+        const phi = phi1 - phi2;
 
-        return { 
+        return {
             theta: Vector.normalizeAngle(theta),
-            phi:  Vector.normalizeAngle(phi)
-         };
+            phi: Vector.normalizeAngle(phi)
+        };
     }
 }
