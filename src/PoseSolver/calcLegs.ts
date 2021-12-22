@@ -20,26 +20,26 @@ export const calcLegs = (lm: Results) => {
     const UpperLeg = {
         r: new Vector({
             x: rightUpperLegSphericalCoords.theta,
-            y: 0,
-            z: rightUpperLegSphericalCoords.phi,
+            y: 0, // not relevant
+            z: rightUpperLegSphericalCoords.phi
         }),
         l: new Vector({
             x: leftUpperLegSphericalCoords.theta,
-            y: 0,
-            z: leftUpperLegSphericalCoords.phi,
+            y: 0, // not relevant
+            z: leftUpperLegSphericalCoords.phi
         }),
     };
 
     const LowerLeg = {
         r: new Vector({
             x: -Vector.angleBetween3DCoords(lm[23], lm[25], lm[27]),
-            y: 0,
-            z: 0
+            y: 0, // not relevant
+            z: 0, // not relevant
         }),
         l: new Vector({
             x: -Vector.angleBetween3DCoords(lm[24], lm[26], lm[28]),
-            y: 0, 
-            z: 0
+            y: 0, // not relevant
+            z: 0, // not relevant
         })
     };
 
