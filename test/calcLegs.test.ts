@@ -104,10 +104,10 @@ describe("should resolve the correct lower leg rotation for", () => {
         worldLandmarks = cloneDeep(poseWorldLandmarks)
       })
 
-    test("lower left leg", () => {
+    test("lower left leg, 90 degree", () => {
         worldLandmarks[24] = {x:0, y: 0, z: 0}
         worldLandmarks[26] = {x:0, y: 0, z: -0.4}
-        worldLandmarks[28] = {x:-0.4, y: 0.4, z: -0.4}
+        worldLandmarks[28] = {x:0, y: 0.4, z: -0.4}
 
         const result = calcLegs(worldLandmarks)
   
@@ -115,7 +115,18 @@ describe("should resolve the correct lower leg rotation for", () => {
         expect(result.Unscaled.LowerLeg.l.x).toBe(-0.5)
     })
 
-    test("lower right leg", () => {
+    test("lower left leg, 45 degree", () => {
+        worldLandmarks[24] = {x:0, y: 0, z: 0}
+        worldLandmarks[26] = {x:0, y: 0, z: -0.4}
+        worldLandmarks[28] = {x:0, y: 0.4, z: -0.8}
+
+        const result = calcLegs(worldLandmarks)
+  
+        expect(result.LowerLeg.l.x).toBe(-PI / 4)
+        expect(result.Unscaled.LowerLeg.l.x).toBe(-0.25)
+    })
+
+    test("lower right leg, 90 degree", () => {
         worldLandmarks[23] = {x:0, y: 0, z: 0}
         worldLandmarks[25] = {x:0, y: 0, z: -0.4}
         worldLandmarks[27] = {x:0, y: 0.4, z: -0.4}
@@ -124,6 +135,17 @@ describe("should resolve the correct lower leg rotation for", () => {
   
         expect(result.LowerLeg.r.x).toBe(-PI / 2)
         expect(result.Unscaled.LowerLeg.r.x).toBe(-0.5)
+    })
+
+    test("lower right leg, 45 degree", () => {
+        worldLandmarks[23] = {x:0, y: 0, z: 0}
+        worldLandmarks[25] = {x:0, y: 0, z: -0.4}
+        worldLandmarks[27] = {x:0, y: 0.4, z: -0.8}
+
+        const result = calcLegs(worldLandmarks)
+  
+        expect(result.LowerLeg.r.x).toBe(-PI / 4)
+        expect(result.Unscaled.LowerLeg.r.x).toBe(-0.25)
     })
 })
 
