@@ -31,8 +31,6 @@ export const calcArms = (lm: Results) => {
         y: "x",
         z: "y",
     });
-    // console.log("~ leftLowerArmSphericalCoords", leftLowerArmSphericalCoords)
-    // console.log("~ rightLowerArmSphericalCoords", rightLowerArmSphericalCoords)
 
     const UpperArm = {
         r: new Vector({
@@ -47,13 +45,6 @@ export const calcArms = (lm: Results) => {
         }),
     };
 
-    // let UpperArm = {
-    //     r: Vector.findRotation(lm[11], lm[13]),
-    //     l: Vector.findRotation(lm[12], lm[14]),
-    // };
-    // UpperArm.r.y = Vector.angleBetween3DCoords(lm[12], lm[11], lm[13]);
-    // UpperArm.l.y = Vector.angleBetween3DCoords(lm[11], lm[12], lm[14]);
-
     const LowerArm = {
         r: new Vector({
             x: 0, // not relevant
@@ -67,14 +58,6 @@ export const calcArms = (lm: Results) => {
         }),
     };
 
-    // let LowerArm = {
-    //     r: Vector.findRotation(lm[13], lm[15]),
-    //     l: Vector.findRotation(lm[14], lm[16]),
-    // };
-    // LowerArm.r.y = Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]);
-    // LowerArm.l.y = Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]);
-    // LowerArm.r.z = clamp(LowerArm.r.z, -2.14, 0);
-    // LowerArm.l.z = clamp(LowerArm.l.z, -2.14, 0);
     let Hand = {
         r: Vector.findRotation(
             Vector.fromArray(lm[15]),
@@ -136,21 +119,6 @@ export const rigArm = (UpperArm: Vector, LowerArm: Vector, Hand: Vector, side: S
         y: LowerArm.y * PI,
         z: LowerArm.z * PI,
     });
-
-    // UpperArm.z *= -2.3 * invert;
-    // //Modify UpperArm rotationY  by LowerArm X and Z rotations
-    // UpperArm.y *= PI * invert;
-    // UpperArm.y -= Math.max(LowerArm.x);
-    // UpperArm.y -= -invert * Math.max(LowerArm.z, 0);
-    // UpperArm.x -= 0.3 * invert;
-
-    // LowerArm.z *= -2.14 * invert;
-    // LowerArm.y *= 2.14 * invert;
-    // LowerArm.x *= 2.14 * invert;
-
-    // //Clamp values to human limits
-    // UpperArm.x = clamp(UpperArm.x, -0.5, PI);
-    // LowerArm.x = clamp(LowerArm.x, -0.3, 0.3);
 
     Hand.y = clamp(Hand.z * 2, -0.6, 0.6); //side to side
     Hand.z = Hand.z * -2.3 * invert; //up down
