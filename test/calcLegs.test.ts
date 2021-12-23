@@ -18,12 +18,12 @@ describe("should resolve the correct upper leg rotation for", () => {
         worldLandmarks[26] = { x: 0, y: 0, z: -0.4 }
 
         const result = calcLegs(worldLandmarks)
-          
-        expect(round(result.UpperLeg.l.x)).toBe(round(PI / 2))
-        expect(round(result.Unscaled.UpperLeg.l.x)).toBe(0.5)
+         
+        expect(result.UpperLeg.l.x).toBeCloseTo(PI / 2)
+        expect(result.Unscaled.UpperLeg.l.x).toBeCloseTo(0.5)
         
-        expect(round(result.UpperLeg.l.z)).toBe(round((0 - offsets.upperLeg.z)))
-        expect(round(result.Unscaled.UpperLeg.l.z)).toBe(0)
+        expect(result.UpperLeg.l.z).toBeCloseTo((0 - offsets.upperLeg.z))
+        expect(result.Unscaled.UpperLeg.l.z).toBeCloseTo(0)
     })
 
     test("upper left leg, straight down", () => {
@@ -33,11 +33,11 @@ describe("should resolve the correct upper leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
           
-        expect(round(result.UpperLeg.l.x)).toBe(round(-0))
-        expect(round(result.Unscaled.UpperLeg.l.z)).toBe(0)
+        expect(result.UpperLeg.l.x).toBeCloseTo(0)
+        expect(result.Unscaled.UpperLeg.l.z).toBeCloseTo(0)
 
-        expect(round(result.UpperLeg.l.z)).toBe(round((0 - offsets.upperLeg.z)))
-        expect(round(result.Unscaled.UpperLeg.l.x)).toBe(-0)
+        expect(result.UpperLeg.l.z).toBeCloseTo((0 - offsets.upperLeg.z))
+        expect(result.Unscaled.UpperLeg.l.x).toBeCloseTo(-0)
     })
 
     test("upper left leg, 90 degree forward, up, 45 degree left", () => {
@@ -47,11 +47,11 @@ describe("should resolve the correct upper leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
           
-        expect(round(result.UpperLeg.l.x)).toBe(round(PI / 2))
-        expect(round(result.Unscaled.UpperLeg.l.x)).toBe(0.5)
+        expect(result.UpperLeg.l.x).toBeCloseTo(PI / 2)
+        expect(result.Unscaled.UpperLeg.l.x).toBeCloseTo(0.5)
 
-        expect(round(result.UpperLeg.l.z)).toBe(round((-PI / 4 - offsets.upperLeg.z)))
-        expect(round(result.Unscaled.UpperLeg.l.z)).toBe(-0.25)
+        expect(result.UpperLeg.l.z).toBeCloseTo((-PI / 4 - offsets.upperLeg.z))
+        expect(result.Unscaled.UpperLeg.l.z).toBeCloseTo(-0.25)
     })
 
     test("upper right leg, 90 degree forward, up", () => {
@@ -61,11 +61,11 @@ describe("should resolve the correct upper leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
   
-        expect(round(result.UpperLeg.r.x)).toBe(round(PI / 2))        
-        expect(round(result.Unscaled.UpperLeg.r.x)).toBe(0.5)
+        expect(result.UpperLeg.r.x).toBeCloseTo(PI / 2)        
+        expect(result.Unscaled.UpperLeg.r.x).toBeCloseTo(0.5)
 
-        expect(round(result.UpperLeg.r.z)).toBe(round(0 + offsets.upperLeg.z))
-        expect(round(result.Unscaled.UpperLeg.r.z)).toBe(0)
+        expect(result.UpperLeg.r.z).toBeCloseTo(0 + offsets.upperLeg.z)
+        expect(result.Unscaled.UpperLeg.r.z).toBeCloseTo(0)
     })
 
     test("upper right leg, straight down", () => {
@@ -75,11 +75,11 @@ describe("should resolve the correct upper leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
           
-        expect(round(result.UpperLeg.r.x)).toBe(round(-0))
-        expect(round(result.Unscaled.UpperLeg.r.z)).toBe(0)
+        expect(result.UpperLeg.r.x).toBeCloseTo(0)
+        expect(result.Unscaled.UpperLeg.r.z).toBeCloseTo(0)
 
-        expect(round(result.UpperLeg.r.z)).toBe(round((0 + offsets.upperLeg.z)))
-        expect(round(result.Unscaled.UpperLeg.r.x)).toBe(-0)
+        expect(result.UpperLeg.r.z).toBeCloseTo((0 + offsets.upperLeg.z))
+        expect(result.Unscaled.UpperLeg.r.x).toBeCloseTo(0)
     })
 
     test("upper right leg, 90 degree forward, up, 45 degree left", () => {
@@ -89,11 +89,11 @@ describe("should resolve the correct upper leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
           
-        expect(round(result.UpperLeg.r.x)).toBe(round(PI / 2))
-        expect(round(result.Unscaled.UpperLeg.r.x)).toBe(0.5)
+        expect(result.UpperLeg.r.x).toBeCloseTo(PI / 2)
+        expect(result.Unscaled.UpperLeg.r.x).toBeCloseTo(0.5)
 
-        expect(round(result.UpperLeg.r.z)).toBe(round((PI / 4 + offsets.upperLeg.z)))
-        expect(round(result.Unscaled.UpperLeg.r.z)).toBe(0.25)
+        expect(result.UpperLeg.r.z).toBeCloseTo((PI / 4 + offsets.upperLeg.z))
+        expect(result.Unscaled.UpperLeg.r.z).toBeCloseTo(0.25)
     })
 })
 
@@ -109,8 +109,8 @@ describe("should resolve the correct lower leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
   
-        expect(result.LowerLeg.l.x).toBe(-PI / 2)
-        expect(result.Unscaled.LowerLeg.l.x).toBe(-0.5)
+        expect(result.LowerLeg.l.x).toBeCloseTo(-PI / 2)
+        expect(result.Unscaled.LowerLeg.l.x).toBeCloseTo(-0.5)
     })
 
     test("lower left leg, 45 degree", () => {
@@ -120,8 +120,8 @@ describe("should resolve the correct lower leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
   
-        expect(result.LowerLeg.l.x).toBe(-PI / 4)
-        expect(result.Unscaled.LowerLeg.l.x).toBe(-0.25)
+        expect(result.LowerLeg.l.x).toBeCloseTo(-PI / 4)
+        expect(result.Unscaled.LowerLeg.l.x).toBeCloseTo(-0.25)
     })
 
     test("lower right leg, 90 degree", () => {
@@ -131,8 +131,8 @@ describe("should resolve the correct lower leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
   
-        expect(result.LowerLeg.r.x).toBe(-PI / 2)
-        expect(result.Unscaled.LowerLeg.r.x).toBe(-0.5)
+        expect(result.LowerLeg.r.x).toBeCloseTo(-PI / 2)
+        expect(result.Unscaled.LowerLeg.r.x).toBeCloseTo(-0.5)
     })
 
     test("lower right leg, 45 degree", () => {
@@ -142,12 +142,7 @@ describe("should resolve the correct lower leg rotation for", () => {
 
         const result = calcLegs(worldLandmarks)
   
-        expect(result.LowerLeg.r.x).toBe(-PI / 4)
-        expect(result.Unscaled.LowerLeg.r.x).toBe(-0.25)
+        expect(result.LowerLeg.r.x).toBeCloseTo(-PI / 4)
+        expect(result.Unscaled.LowerLeg.r.x).toBeCloseTo(-0.25)
     })
 })
-
-function round(value: number, decimals: number = 3){
-    const factor = Math.pow(10, decimals)
-    return Math.round(value * factor) / factor
-}
