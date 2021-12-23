@@ -429,13 +429,9 @@ export default class Vector {
      * @param {Vector | number} a: Vector or Number
      * @param {Vector | number} b: Vector or Number
      * @param {Vector | number} c: Vector or Number
+     * @param {AxisMap} axisMap: Mapped axis to get the right spherical coords
      */
-    static getRelativeSphericalCoords(
-        a: Vector | XYZ,
-        b: Vector | XYZ,
-        c: Vector | XYZ,
-        axisMap: AxisMap = { x: "x", y: "y", z: "z" }
-    ) {
+    static getRelativeSphericalCoords(a: Vector | XYZ, b: Vector | XYZ, c: Vector | XYZ, axisMap: AxisMap) {
         if (!(a instanceof Vector)) {
             a = new Vector(a);
             b = new Vector(b);
@@ -466,6 +462,7 @@ export default class Vector {
      * Get normalized, spherical coordinates for the vector bc
      * @param {Vector | number} a: Vector or Number
      * @param {Vector | number} b: Vector or Number
+     * @param {AxisMap} axisMap: Mapped axis to get the right spherical coords
      */
     static getSphericalCoords(a: Vector | XYZ, b: Vector | XYZ, axisMap: AxisMap = { x: "x", y: "y", z: "z" }) {
         if (!(a instanceof Vector)) {
