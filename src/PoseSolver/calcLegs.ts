@@ -1,4 +1,5 @@
 import Vector from "../utils/vector";
+import Euler from "../utils/euler";
 import { Results, Side } from "../Types";
 import { RIGHT, LEFT } from "./../constants";
 import { PI } from "./../constants";
@@ -74,12 +75,12 @@ export const calcLegs = (lm: Results) => {
  */
 export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) => {
     let invert = side === RIGHT ? 1 : -1;
-    let rigedUpperLeg = new Vector({
+    let rigedUpperLeg = new Euler({
         x: UpperLeg.x * PI,
         y: UpperLeg.y * PI,
         z: UpperLeg.z * PI + invert * offsets.upperLeg.z,
     });
-    let rigedLowerLeg = new Vector({
+    let rigedLowerLeg = new Euler({
         x: LowerLeg.x * PI,
         y: 0, // not relevant
         z: 0, // not relevant

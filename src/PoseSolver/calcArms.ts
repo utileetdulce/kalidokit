@@ -1,4 +1,5 @@
 import Vector from "../utils/vector";
+import Euler from "../utils/euler";
 import { clamp } from "../utils/helpers";
 import { Results, Side } from "../Types";
 import { RIGHT, LEFT } from "./../constants";
@@ -32,14 +33,19 @@ export const calcArms = (lm: Results) => {
         z: "y",
     });
 
+    let Hand = {
+        r: Vector.findRotation(new Vector(lm[15]), Vector.lerp(new Vector(lm[17]), new Vector(lm[19]), 0.5)),
+        l: Vector.findRotation(new Vector(lm[16]), Vector.lerp(new Vector(lm[18]), new Vector(lm[20]), 0.5)),
+    };
+
     const UpperArm = {
         r: new Vector({
-            x: -rightLowerArmSphericalCoords.phi,
+            x: -rightLowerArmSphericalCoords.phi - 0.2,
             y: -rightUpperArmSphericalCoords.theta,
             z: -rightUpperArmSphericalCoords.phi,
         }),
         l: new Vector({
-            x: -leftLowerArmSphericalCoords.phi,
+            x: -leftLowerArmSphericalCoords.phi - 0.2,
             y: -leftUpperArmSphericalCoords.theta,
             z: leftUpperArmSphericalCoords.phi,
         }),
@@ -47,26 +53,15 @@ export const calcArms = (lm: Results) => {
 
     const LowerArm = {
         r: new Vector({
-            x: 0, // not relevant
+            x: Hand.r.x, //0, // not relevant
             y: Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]), //rightLowerArmSphericalCoords.theta,
             z: 0, //rightLowerArmSphericalCoords.phi,
         }),
         l: new Vector({
-            x: 0, // not relevant
+            x: -Hand.l.x, // not relevant
             y: -Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]), //leftLowerArmSphericalCoords.phi,
             z: 0, //PI / 2.2 + leftLowerArmSphericalCoords.theta,
         }),
-    };
-
-    let Hand = {
-        r: Vector.findRotation(
-            Vector.fromArray(lm[15]),
-            Vector.lerp(Vector.fromArray(lm[17]), Vector.fromArray(lm[19]), 0.5)
-        ),
-        l: Vector.findRotation(
-            Vector.fromArray(lm[16]),
-            Vector.lerp(Vector.fromArray(lm[18]), Vector.fromArray(lm[20]), 0.5)
-        ),
     };
 
     //Modify Rotations slightly for more natural movement
@@ -107,17 +102,18 @@ export const rigArm = (UpperArm: Vector, LowerArm: Vector, Hand: Vector, side: S
     // Invert modifier based on left vs right side
     const invert = side === RIGHT ? 1 : -1;
 
-    let rigedUpperArm = new Vector({
+    let rigedUpperArm = new Euler({
         x: UpperArm.x * PI,
         y: UpperArm.y * PI,
         z: UpperArm.z * PI,
         rotationOrder: "YZX",
     });
 
-    let rigedLowerArm = new Vector({
+    let rigedLowerArm = new Euler({
         x: LowerArm.x * PI,
         y: LowerArm.y * PI,
         z: LowerArm.z * PI,
+        rotationOrder: "YZX",
     });
 
     Hand.y = clamp(Hand.z * 2, -0.6, 0.6); //side to side
