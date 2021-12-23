@@ -459,7 +459,29 @@ export default class Vector {
 
         return {
             theta: Vector.normalizeAngle(theta),
-            phi: Vector.normalizeAngle(phi)
+            phi: Vector.normalizeAngle(phi),
+        };
+    }
+    /**
+     * Get normalized, spherical coordinates for the vector bc
+     * @param {Vector | number} a: Vector or Number
+     * @param {Vector | number} b: Vector or Number
+     */
+    static getSphericalCoords(a: Vector | XYZ, b: Vector | XYZ, axisMap: AxisMap = { x: "x", y: "y", z: "z" }) {
+        if (!(a instanceof Vector)) {
+            a = new Vector(a);
+            b = new Vector(b);
+        }
+
+        // Calculate vector between points 1 and 2
+        const v1 = (b as Vector).subtract(a as Vector);
+
+        const v1norm = v1.unit();
+        const { theta, phi } = v1norm.toSphericalCoords(axisMap);
+
+        return {
+            theta: Vector.normalizeAngle(-theta),
+            phi: Vector.normalizeAngle(PI / 2 - phi),
         };
     }
 }

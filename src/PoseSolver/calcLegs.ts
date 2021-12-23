@@ -5,28 +5,29 @@ import { PI } from "./../constants";
 
 export const offsets = {
     upperLeg: {
-        z: 0.2,
+        z: 0.1,
     },
 };
 
 /**
- * Calculates leg rotation as euler angles
- * TODO: Make angles more accurate in all rotation axis
+ * Calculates leg rotation angles
  * @param {Results} lm : array of 3D pose vectors from tfjs or mediapipe
  */
 export const calcLegs = (lm: Results) => {
-    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[23], lm[25], { x: "y", y: "z", z: "x" });
-    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[24], lm[26], { x: "y", y: "z", z: "x" });
+    const rightUpperLegSphericalCoords = Vector.getSphericalCoords(lm[23], lm[25], { x: "y", y: "z", z: "x" });
+    const leftUpperLegSphericalCoords = Vector.getSphericalCoords(lm[24], lm[26], { x: "y", y: "z", z: "x" });
+    const hipRotation = Vector.findRotation(lm[23], lm[24]);
+
     const UpperLeg = {
         r: new Vector({
             x: rightUpperLegSphericalCoords.theta,
             y: 0, // not relevant
-            z: rightUpperLegSphericalCoords.phi
+            z: rightUpperLegSphericalCoords.phi - hipRotation.z,
         }),
         l: new Vector({
             x: leftUpperLegSphericalCoords.theta,
             y: 0, // not relevant
-            z: leftUpperLegSphericalCoords.phi
+            z: leftUpperLegSphericalCoords.phi - hipRotation.z,
         }),
     };
 
@@ -40,7 +41,7 @@ export const calcLegs = (lm: Results) => {
             x: -Vector.angleBetween3DCoords(lm[24], lm[26], lm[28]),
             y: 0, // not relevant
             z: 0, // not relevant
-        })
+        }),
     };
 
     //Modify Rotations slightly for more natural movement
