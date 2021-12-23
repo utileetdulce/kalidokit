@@ -10,12 +10,12 @@ import { PI } from "./../constants";
  */
 export const calcArms = (lm: Results) => {
     //Pure Rotation Calculations
-    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[11], lm[13], {
+    const rightUpperArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[11], lm[13], {
         x: "z",
         y: "x",
         z: "y",
     });
-    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[12], lm[14], {
+    const leftUpperArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[12], lm[14], {
         x: "z",
         y: "x",
         z: "y",
@@ -23,14 +23,14 @@ export const calcArms = (lm: Results) => {
 
     const UpperArm = {
         r: new Vector({
-            z: -rightUpperLegSphericalCoords.phi,
             x: 0, // not relevant
-            y: -rightUpperLegSphericalCoords.theta,
+            y: -rightUpperArmSphericalCoords.theta,
+            z: -rightUpperArmSphericalCoords.phi,
         }),
         l: new Vector({
-            z: leftUpperLegSphericalCoords.phi,
             x: 0, // not relevant
-            y: -leftUpperLegSphericalCoords.theta,
+            y: -leftUpperArmSphericalCoords.theta,
+            z: leftUpperArmSphericalCoords.phi,
         }),
     };
 
@@ -41,14 +41,39 @@ export const calcArms = (lm: Results) => {
     // UpperArm.r.y = Vector.angleBetween3DCoords(lm[12], lm[11], lm[13]);
     // UpperArm.l.y = Vector.angleBetween3DCoords(lm[11], lm[12], lm[14]);
 
-    let LowerArm = {
-        r: Vector.findRotation(lm[13], lm[15]),
-        l: Vector.findRotation(lm[14], lm[16]),
+
+    const rightLowerArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[13], lm[15], {
+        x: "z",
+        y: "x",
+        z: "y",
+    });
+    const leftLowerArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[14], lm[16], {
+        x: "z",
+        y: "x",
+        z: "y",
+    });
+
+    const LowerArm = {
+        r: new Vector({
+            x: 0, // not relevant
+            y: 0, //rightLowerArmSphericalCoords.theta,
+            z: 0, //rightLowerArmSphericalCoords.phi,
+        }),
+        l: new Vector({
+            x: 0, // not relevant
+            y: 0, //leftLowerArmSphericalCoords.theta,
+            z: 0, //leftLowerArmSphericalCoords.phi,
+        }),
     };
-    LowerArm.r.y = Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]);
-    LowerArm.l.y = Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]);
-    LowerArm.r.z = clamp(LowerArm.r.z, -2.14, 0);
-    LowerArm.l.z = clamp(LowerArm.l.z, -2.14, 0);
+
+    // let LowerArm = {
+    //     r: Vector.findRotation(lm[13], lm[15]),
+    //     l: Vector.findRotation(lm[14], lm[16]),
+    // };
+    // LowerArm.r.y = Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]);
+    // LowerArm.l.y = Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]);
+    // LowerArm.r.z = clamp(LowerArm.r.z, -2.14, 0);
+    // LowerArm.l.z = clamp(LowerArm.l.z, -2.14, 0);
     let Hand = {
         r: Vector.findRotation(
             Vector.fromArray(lm[15]),
@@ -105,9 +130,9 @@ export const rigArm = (UpperArm: Vector, LowerArm: Vector, Hand: Vector, side: S
     });
 
     let rigedLowerArm = new Vector({
-        x: UpperArm.x * 0,
-        y: UpperArm.y * 0,
-        z: UpperArm.z * 0,
+        x: LowerArm.x * PI,
+        y: LowerArm.y * PI,
+        z: LowerArm.z * PI,
     });
 
     // UpperArm.z *= -2.3 * invert;
