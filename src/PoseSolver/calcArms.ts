@@ -21,14 +21,27 @@ export const calcArms = (lm: Results) => {
         z: "y",
     });
 
+    const rightLowerArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[13], lm[15], {
+        x: "z",
+        y: "x",
+        z: "y",
+    });
+    const leftLowerArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[14], lm[16], {
+        x: "z",
+        y: "x",
+        z: "y",
+    });
+    // console.log("~ leftLowerArmSphericalCoords", leftLowerArmSphericalCoords)
+    // console.log("~ rightLowerArmSphericalCoords", rightLowerArmSphericalCoords)
+
     const UpperArm = {
         r: new Vector({
-            x: 0, // not relevant
+            x: -rightLowerArmSphericalCoords.phi,
             y: -rightUpperArmSphericalCoords.theta,
             z: -rightUpperArmSphericalCoords.phi,
         }),
         l: new Vector({
-            x: 0, // not relevant
+            x: -leftLowerArmSphericalCoords.phi,
             y: -leftUpperArmSphericalCoords.theta,
             z: leftUpperArmSphericalCoords.phi,
         }),
@@ -41,28 +54,16 @@ export const calcArms = (lm: Results) => {
     // UpperArm.r.y = Vector.angleBetween3DCoords(lm[12], lm[11], lm[13]);
     // UpperArm.l.y = Vector.angleBetween3DCoords(lm[11], lm[12], lm[14]);
 
-
-    const rightLowerArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[13], lm[15], {
-        x: "z",
-        y: "x",
-        z: "y",
-    });
-    const leftLowerArmSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[14], lm[16], {
-        x: "z",
-        y: "x",
-        z: "y",
-    });
-
     const LowerArm = {
         r: new Vector({
             x: 0, // not relevant
-            y: 0, //rightLowerArmSphericalCoords.theta,
+            y: Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]), //rightLowerArmSphericalCoords.theta,
             z: 0, //rightLowerArmSphericalCoords.phi,
         }),
         l: new Vector({
             x: 0, // not relevant
-            y: 0, //leftLowerArmSphericalCoords.theta,
-            z: 0, //leftLowerArmSphericalCoords.phi,
+            y: -Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]), //leftLowerArmSphericalCoords.phi,
+            z: 0, //PI / 2.2 + leftLowerArmSphericalCoords.theta,
         }),
     };
 
@@ -127,6 +128,7 @@ export const rigArm = (UpperArm: Vector, LowerArm: Vector, Hand: Vector, side: S
         x: UpperArm.x * PI,
         y: UpperArm.y * PI,
         z: UpperArm.z * PI,
+        rotationOrder: "YZX",
     });
 
     let rigedLowerArm = new Vector({

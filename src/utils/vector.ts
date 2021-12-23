@@ -1,4 +1,4 @@
-import { XYZ, AxisMap } from "../Types";
+import { XYZ, AxisMap, RotationOrder } from "../Types";
 import { PI, TWO_PI } from "./../constants";
 
 /** Vector Math class. */
@@ -6,12 +6,14 @@ export default class Vector {
     public x: number;
     public y: number;
     public z: number;
+    public rotationOrder?: RotationOrder;
 
-    constructor(a?: number[] | XYZ | number | Vector, b?: number, c?: number) {
+    constructor(a?: number[] | XYZ | number | Vector, b?: number, c?: number, rotationOrder?: RotationOrder) {
         if (Array.isArray(a)) {
             this.x = a[0] ?? 0;
             this.y = a[1] ?? 0;
             this.z = a[2] ?? 0;
+            this.rotationOrder = rotationOrder ?? "XYZ";
             return;
         }
 
@@ -19,12 +21,14 @@ export default class Vector {
             this.x = a.x ?? 0;
             this.y = a.y ?? 0;
             this.z = a.z ?? 0;
+            this.rotationOrder = rotationOrder ?? "XYZ";
             return;
         }
 
         this.x = a ?? 0;
         this.y = b ?? 0;
         this.z = c ?? 0;
+        this.rotationOrder = rotationOrder ?? "XYZ";
     }
 
     // Methods //

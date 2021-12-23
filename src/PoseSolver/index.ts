@@ -67,8 +67,8 @@ export class PoseSolver {
         // Arms.UpperArm.r = Arms.UpperArm.r.multiply(rightHandOffscreen ? 0 : 1);
         // Arms.UpperArm.r.z = rightHandOffscreen ? RestingDefault.Pose.RightUpperArm.z : Arms.UpperArm.r.z;
 
-        Arms.LowerArm.l = Arms.LowerArm.l.multiply(leftHandOffscreen ? 0 : 1);
-        Arms.LowerArm.r = Arms.LowerArm.r.multiply(rightHandOffscreen ? 0 : 1);
+        // Arms.LowerArm.l = Arms.LowerArm.l.multiply(leftHandOffscreen ? 0 : 1);
+        // Arms.LowerArm.r = Arms.LowerArm.r.multiply(rightHandOffscreen ? 0 : 1);
 
         Arms.Hand.l = Arms.Hand.l.multiply(leftHandOffscreen ? 0 : 1);
         Arms.Hand.r = Arms.Hand.r.multiply(rightHandOffscreen ? 0 : 1);

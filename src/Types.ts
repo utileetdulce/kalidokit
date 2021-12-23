@@ -49,6 +49,8 @@ export type Side = typeof RIGHT | typeof LEFT;
 
 export type XYZ = Record<"x" | "y" | "z", number>;
 
+export type RotationOrder = "XYZ" | "YZX" | "ZXY" | "XZY" | "YXZ" | "ZYX";
+
 export type AxisMap = Record<"x" | "y" | "z", "x" | "y" | "z">;
 
 export type LR<T = Vector> = Record<"l" | "r", T>;
