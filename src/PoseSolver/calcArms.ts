@@ -10,12 +10,36 @@ import { PI } from "./../constants";
  */
 export const calcArms = (lm: Results) => {
     //Pure Rotation Calculations
-    let UpperArm = {
-        r: Vector.findRotation(lm[11], lm[13]),
-        l: Vector.findRotation(lm[12], lm[14]),
+    const rightUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[12], lm[11], lm[13], {
+        x: "z",
+        y: "x",
+        z: "y",
+    });
+    const leftUpperLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[11], lm[12], lm[14], {
+        x: "z",
+        y: "x",
+        z: "y",
+    });
+
+    const UpperArm = {
+        r: new Vector({
+            z: -rightUpperLegSphericalCoords.phi,
+            x: 0, // not relevant
+            y: -rightUpperLegSphericalCoords.theta,
+        }),
+        l: new Vector({
+            z: leftUpperLegSphericalCoords.phi,
+            x: 0, // not relevant
+            y: -leftUpperLegSphericalCoords.theta,
+        }),
     };
-    UpperArm.r.y = Vector.angleBetween3DCoords(lm[12], lm[11], lm[13]);
-    UpperArm.l.y = Vector.angleBetween3DCoords(lm[11], lm[12], lm[14]);
+
+    // let UpperArm = {
+    //     r: Vector.findRotation(lm[11], lm[13]),
+    //     l: Vector.findRotation(lm[12], lm[14]),
+    // };
+    // UpperArm.r.y = Vector.angleBetween3DCoords(lm[12], lm[11], lm[13]);
+    // UpperArm.l.y = Vector.angleBetween3DCoords(lm[11], lm[12], lm[14]);
 
     let LowerArm = {
         r: Vector.findRotation(lm[13], lm[15]),
@@ -74,28 +98,40 @@ export const rigArm = (UpperArm: Vector, LowerArm: Vector, Hand: Vector, side: S
     // Invert modifier based on left vs right side
     const invert = side === RIGHT ? 1 : -1;
 
-    UpperArm.z *= -2.3 * invert;
-    //Modify UpperArm rotationY  by LowerArm X and Z rotations
-    UpperArm.y *= PI * invert;
-    UpperArm.y -= Math.max(LowerArm.x);
-    UpperArm.y -= -invert * Math.max(LowerArm.z, 0);
-    UpperArm.x -= 0.3 * invert;
+    let rigedUpperArm = new Vector({
+        x: UpperArm.x * PI,
+        y: UpperArm.y * PI,
+        z: UpperArm.z * PI,
+    });
 
-    LowerArm.z *= -2.14 * invert;
-    LowerArm.y *= 2.14 * invert;
-    LowerArm.x *= 2.14 * invert;
+    let rigedLowerArm = new Vector({
+        x: UpperArm.x * 0,
+        y: UpperArm.y * 0,
+        z: UpperArm.z * 0,
+    });
 
-    //Clamp values to human limits
-    UpperArm.x = clamp(UpperArm.x, -0.5, PI);
-    LowerArm.x = clamp(LowerArm.x, -0.3, 0.3);
+    // UpperArm.z *= -2.3 * invert;
+    // //Modify UpperArm rotationY  by LowerArm X and Z rotations
+    // UpperArm.y *= PI * invert;
+    // UpperArm.y -= Math.max(LowerArm.x);
+    // UpperArm.y -= -invert * Math.max(LowerArm.z, 0);
+    // UpperArm.x -= 0.3 * invert;
+
+    // LowerArm.z *= -2.14 * invert;
+    // LowerArm.y *= 2.14 * invert;
+    // LowerArm.x *= 2.14 * invert;
+
+    // //Clamp values to human limits
+    // UpperArm.x = clamp(UpperArm.x, -0.5, PI);
+    // LowerArm.x = clamp(LowerArm.x, -0.3, 0.3);
 
     Hand.y = clamp(Hand.z * 2, -0.6, 0.6); //side to side
     Hand.z = Hand.z * -2.3 * invert; //up down
 
     return {
         //Returns Values in Radians for direct 3D usage
-        UpperArm: UpperArm,
-        LowerArm: LowerArm,
+        UpperArm: rigedUpperArm,
+        LowerArm: rigedLowerArm,
         Hand: Hand,
     };
 };
