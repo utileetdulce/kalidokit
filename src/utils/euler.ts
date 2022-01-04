@@ -28,6 +28,6 @@ export default class Euler {
      * @param {number} a: Number to multiply
      */
     multiply(v: number) {
-        return new Euler(this.x * v, this.y * v, this.z * v);
+        return new Euler(this.x * v, this.y * v, this.z * v, this.rotationOrder);
     }
 }
