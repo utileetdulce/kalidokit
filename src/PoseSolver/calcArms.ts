@@ -40,12 +40,12 @@ export const calcArms = (lm: Results) => {
 
     const UpperArm = {
         r: new Vector({
-            x: -rightLowerArmSphericalCoords.phi - 0.2,
+            x: rightLowerArmSphericalCoords.theta + 0.5,
             y: -rightUpperArmSphericalCoords.theta,
             z: -rightUpperArmSphericalCoords.phi,
         }),
         l: new Vector({
-            x: -leftLowerArmSphericalCoords.phi - 0.2,
+            x: -leftLowerArmSphericalCoords.theta + 0.5,
             y: -leftUpperArmSphericalCoords.theta,
             z: leftUpperArmSphericalCoords.phi,
         }),
@@ -53,14 +53,14 @@ export const calcArms = (lm: Results) => {
 
     const LowerArm = {
         r: new Vector({
-            x: Hand.r.x, //0, // not relevant
-            y: Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]), //rightLowerArmSphericalCoords.theta,
+            x: 0,//Hand.r.x , //0, // not relevant
+            y: -rightLowerArmSphericalCoords.phi, //Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]), //rightLowerArmSphericalCoords.theta,
             z: 0, //rightLowerArmSphericalCoords.phi,
         }),
         l: new Vector({
-            x: -Hand.l.x, // not relevant
-            y: -Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]), //leftLowerArmSphericalCoords.phi,
-            z: 0, //PI / 2.2 + leftLowerArmSphericalCoords.theta,
+            x: 0,//-Hand.l.x , // not relevant
+            y: leftLowerArmSphericalCoords.phi, //-Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]), //leftLowerArmSphericalCoords.phi,
+            z: 0.0, //PI / 2.2 + leftLowerArmSphericalCoords.theta,
         }),
     };
 
