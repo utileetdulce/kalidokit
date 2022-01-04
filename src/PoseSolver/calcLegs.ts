@@ -17,6 +17,27 @@ export const offsets = {
 export const calcLegs = (lm: Results) => {
     const rightUpperLegSphericalCoords = Vector.getSphericalCoords(lm[23], lm[25], { x: "y", y: "z", z: "x" });
     const leftUpperLegSphericalCoords = Vector.getSphericalCoords(lm[24], lm[26], { x: "y", y: "z", z: "x" });
+    const rightLowerLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[23], lm[25], lm[27], {
+        x: "y",
+        y: "z",
+        z: "x",
+    });
+    const leftLowerLegSphericalCoords = Vector.getRelativeSphericalCoords(lm[24], lm[26], lm[28], {
+        x: "y",
+        y: "z",
+        z: "x",
+    });
+    const rightFootSphericalCoords = Vector.getRelativeSphericalCoords(lm[23], lm[25], lm[27], {
+        x: "y",
+        y: "z",
+        z: "x",
+    });
+    const leftFootSphericalCoords = Vector.getRelativeSphericalCoords(lm[24], lm[26], lm[28], {
+        x: "y",
+        y: "z",
+        z: "x",
+    });
+    console.log("~ leftFootSphericalCoords", leftFootSphericalCoords)
     const hipRotation = Vector.findRotation(lm[23], lm[24]);
 
     const UpperLeg = {
@@ -34,12 +55,12 @@ export const calcLegs = (lm: Results) => {
 
     const LowerLeg = {
         r: new Vector({
-            x: -Vector.angleBetween3DCoords(lm[23], lm[25], lm[27]),
+            x: -Math.abs(rightLowerLegSphericalCoords.theta),
             y: 0, // not relevant
             z: 0, // not relevant
         }),
         l: new Vector({
-            x: -Vector.angleBetween3DCoords(lm[24], lm[26], lm[28]),
+            x: -Math.abs(leftLowerLegSphericalCoords.theta),
             y: 0, // not relevant
             z: 0, // not relevant
         }),
