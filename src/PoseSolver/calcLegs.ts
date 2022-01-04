@@ -43,12 +43,12 @@ export const calcLegs = (lm: Results) => {
     const UpperLeg = {
         r: new Vector({
             x: rightUpperLegSphericalCoords.theta,
-            y: 0, // not relevant
+            y: rightLowerLegSphericalCoords.phi, 
             z: rightUpperLegSphericalCoords.phi - hipRotation.z,
         }),
         l: new Vector({
             x: leftUpperLegSphericalCoords.theta,
-            y: 0, // not relevant
+            y: leftLowerLegSphericalCoords.phi,
             z: leftUpperLegSphericalCoords.phi - hipRotation.z,
         }),
     };
@@ -100,6 +100,7 @@ export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) =
         x: UpperLeg.x * PI,
         y: UpperLeg.y * PI,
         z: UpperLeg.z * PI + invert * offsets.upperLeg.z,
+        rotationOrder: "ZXY",
     });
     let rigedLowerLeg = new Euler({
         x: LowerLeg.x * PI,
