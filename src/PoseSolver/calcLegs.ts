@@ -98,10 +98,10 @@ export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) =
     let invert = side === RIGHT ? 1 : -1;
     
     let rigedUpperLeg = new Euler({
-        rotationOrder: "ZXY",
         x: clamp(UpperLeg.x, 0, 0.5) * PI,
         y: clamp(UpperLeg.y, -0.25, 0.25) * PI,
         z: clamp(UpperLeg.z * PI, -PI/2, PI/2) + invert * offsets.upperLeg.z,
+        rotationOrder: "YZX",
     });
     let rigedLowerLeg = new Euler({
         x: LowerLeg.x * PI,
