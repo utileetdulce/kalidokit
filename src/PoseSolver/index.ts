@@ -40,10 +40,10 @@ export class PoseSolver {
             };
         }
         if (runtime === "tfjs" && imageSize) {
-            lm3d.forEach((e, i) => {
+            lm3d.forEach((e) => {
                 e.visibility = e.score;
             });
-            lm2d.forEach((e, i) => {
+            lm2d.forEach((e) => {
                 e.x /= imageSize!.width;
                 e.y /= imageSize!.height;
                 e.z = 0;
