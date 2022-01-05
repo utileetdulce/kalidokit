@@ -1,4 +1,4 @@
-import { XYZ, AxisMap, RotationOrder } from "../Types";
+import { XYZ, AxisMap, EulerRotation } from "../Types";
 import { PI, TWO_PI } from "./../constants";
 
 /** Vector Math class. */
@@ -6,14 +6,12 @@ export default class Vector {
     public x: number;
     public y: number;
     public z: number;
-    public rotationOrder?: RotationOrder;
 
-    constructor(a?: number[] | XYZ | number | Vector, b?: number, c?: number, rotationOrder?: RotationOrder) {
+    constructor(a?: number[] | XYZ | number | Vector | EulerRotation, b?: number, c?: number) {
         if (Array.isArray(a)) {
             this.x = a[0] ?? 0;
             this.y = a[1] ?? 0;
             this.z = a[2] ?? 0;
-            this.rotationOrder = rotationOrder ?? "XYZ";
             return;
         }
 
@@ -21,14 +19,12 @@ export default class Vector {
             this.x = a.x ?? 0;
             this.y = a.y ?? 0;
             this.z = a.z ?? 0;
-            this.rotationOrder = rotationOrder ?? "XYZ";
             return;
         }
 
         this.x = a ?? 0;
         this.y = b ?? 0;
         this.z = c ?? 0;
-        this.rotationOrder = rotationOrder ?? "XYZ";
     }
 
     // Methods //
@@ -306,16 +302,6 @@ export default class Vector {
      */
     static angleBetween(a: Vector, b: Vector) {
         return a.angleTo(b);
-    }
-    /**
-     * Angle between two vertices
-     * @param a
-     * @param b
-     * @param c
-     */
-    static angleBetweenVertices(a: Vector, b: Vector, c: Vector) {
-        let ab = a.subtract(b);
-        let bc = c.subtract(b);
     }
     static distance(a: Vector, b: Vector, d: number) {
         if (d === 2) return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
