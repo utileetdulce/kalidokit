@@ -53,14 +53,14 @@ export const calcArms = (lm: Results) => {
 
     const LowerArm = {
         r: new Vector({
-            x: 0,//Hand.r.x , //0, // not relevant
-            y: -rightLowerArmSphericalCoords.phi, //Vector.angleBetween3DCoords(lm[11], lm[13], lm[15]), //rightLowerArmSphericalCoords.theta,
-            z: 0, //rightLowerArmSphericalCoords.phi,
+            x: 0,
+            y: -rightLowerArmSphericalCoords.phi,
+            z: 0,
         }),
         l: new Vector({
-            x: 0,//-Hand.l.x , // not relevant
-            y: leftLowerArmSphericalCoords.phi, //-Vector.angleBetween3DCoords(lm[12], lm[14], lm[16]), //leftLowerArmSphericalCoords.phi,
-            z: 0.0, //PI / 2.2 + leftLowerArmSphericalCoords.theta,
+            x: 0,
+            y: leftLowerArmSphericalCoords.phi,
+            z: 0,
         }),
     };
 

@@ -37,13 +37,12 @@ export const calcLegs = (lm: Results) => {
         y: "z",
         z: "x",
     });
-    console.log("~ leftFootSphericalCoords", leftFootSphericalCoords)
     const hipRotation = Vector.findRotation(lm[23], lm[24]);
 
     const UpperLeg = {
         r: new Vector({
             x: rightUpperLegSphericalCoords.theta,
-            y: rightLowerLegSphericalCoords.phi, 
+            y: rightLowerLegSphericalCoords.phi,
             z: rightUpperLegSphericalCoords.phi - hipRotation.z,
         }),
         l: new Vector({
