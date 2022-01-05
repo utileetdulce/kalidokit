@@ -3,6 +3,7 @@ const { defineConfig } = require("vite");
 import Banner from "vite-plugin-banner";
 import pkg from "./package.json";
 import friendlyTypeImports from "rollup-plugin-friendly-type-imports";
+import { resolve } from "path";
 module.exports = defineConfig({
     base: "./",
     build: {

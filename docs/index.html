@@ -30,7 +30,14 @@
       rel="shortcut icon"
       href="https://yeemachine.github.io/kalidoface-live2d-models/Icons/icon-circle.svg"
     />
-
+    <!--     Basic Three.js -->
+    <script src="https://unpkg.com/three@0.133.0/build/three.js"></script>
+    <!--     GLTF Loader for Three.js -->
+    <script src="https://unpkg.com/three@0.133.0/examples/js/loaders/GLTFLoader.js"></script>
+    <!--     Orbit Controls for Three.js -->
+    <script src="https://unpkg.com/three@0.133.0/examples/js/controls/OrbitControls.js"></script>
+    <!--     VRM Loader for Three.js -->
+    <script src="https://unpkg.com/@pixiv/three-vrm@0.6.7/lib/three-vrm.js"></script>
     <!--     Mediapipe or Tensorflow.js -->
     <script
       src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.5.1635989137/holistic.js"
@@ -53,6 +60,10 @@
     <div class="preview">
       <video class="input_video" width="1280px" height="720px"></video>
       <canvas class="guides"></canvas>
+      <section>
+        <a href="/live2d/"><p>Live2D</p></a>
+        <a class="current" href="/"><p>VRM</p></a>  
+      </section>
     </div>
     <h1 class="notranslate">
       <a href="https://3d.kalidoface.com">kalidoface</a>
@@ -74,6 +85,10 @@
         />
       </a>
     </nav>
+    <p class="linkOut">
+      Visit
+      <a id="full" href="https://kalidoface.com">the full Vtuber App</a>!
+    </p>
     <script src="./script.js" type="module" defer></script>
   </body>
 </html>
