@@ -1,5 +1,6 @@
 import Vector from "../utils/vector";
 import Euler from "../utils/euler";
+import { clamp } from "../utils/helpers";
 import { Results, Side } from "../Types";
 import { RIGHT, LEFT } from "./../constants";
 import { PI } from "./../constants";
@@ -95,16 +96,17 @@ export const calcLegs = (lm: Results) => {
  */
 export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) => {
     let invert = side === RIGHT ? 1 : -1;
+    
     let rigedUpperLeg = new Euler({
-        x: UpperLeg.x * PI,
-        y: UpperLeg.y * PI,
-        z: UpperLeg.z * PI + invert * offsets.upperLeg.z,
         rotationOrder: "ZXY",
+        x: clamp(UpperLeg.x, 0, 0.5) * PI,
+        y: clamp(UpperLeg.y, -0.25, 0.25) * PI,
+        z: clamp(UpperLeg.z * PI, -PI/2, PI/2) + invert * offsets.upperLeg.z,
     });
     let rigedLowerLeg = new Euler({
         x: LowerLeg.x * PI,
-        y: 0, // not relevant
-        z: 0, // not relevant
+        y: LowerLeg.y * PI,
+        z: LowerLeg.z * PI,
     });
 
     return {
