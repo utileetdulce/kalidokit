@@ -56,11 +56,11 @@ export class PoseSolver {
         let Legs = enableLegs ? calcLegs(lm3d) : null;
 
         //DETECT OFFSCREEN AND RESET VALUES TO DEFAULTS
-        let rightHandOffscreen = lm3d[15].visibility! < 0.5 || 0.995 < lm2d[15].y;
-        let leftHandOffscreen = lm3d[16].visibility! < 0.5 || 0.995 < lm2d[16].y;
+        let rightHandOffscreen = lm3d[15].y > 0.1 || lm3d[15].visibility! < 0.23 || 0.995 < lm2d[15].y;
+        let leftHandOffscreen = lm3d[16].y > 0.1 || lm3d[16].visibility! < 0.23 || 0.995 < lm2d[16].y;
 
-        let leftFootOffscreen = lm3d[23]?.visibility! < 0.5 || Hips.Hips.position.z > -0.4;
-        let rightFootOffscreen = lm3d[24]?.visibility! < 0.5 || Hips.Hips.position.z > -0.4;
+        let leftFootOffscreen = lm3d[23].y > 0.1 || lm3d[23]?.visibility! < 0.63 || Hips.Hips.position.z > -0.4;
+        let rightFootOffscreen = lm3d[24].y > 0.1 || lm3d[24]?.visibility! < 0.63 || Hips.Hips.position.z > -0.4;
 
         Arms.UpperArm.l = Arms.UpperArm.l.multiply(leftHandOffscreen ? 0 : 1);
         Arms.UpperArm.l.z = leftHandOffscreen ? RestingDefault.Pose.LeftUpperArm.z : Arms.UpperArm.l.z;
