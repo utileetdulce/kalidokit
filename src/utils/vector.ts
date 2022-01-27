@@ -246,7 +246,7 @@ export default class Vector {
         return c;
     }
     static unit(a: Vector, b: Vector) {
-        let length = a.length();
+        const length = a.length();
         b.x = a.x / length;
         b.y = a.y / length;
         b.z = a.z / length;
@@ -328,9 +328,9 @@ export default class Vector {
         return radians / PI;
     }
     static find2DAngle(cx: number, cy: number, ex: number, ey: number) {
-        var dy = ey - cy;
-        var dx = ex - cx;
-        var theta = Math.atan2(dy, dx);
+        const dy = ey - cy;
+        const dx = ex - cx;
+        const theta = Math.atan2(dy, dx);
         return theta;
     }
     /**
@@ -368,17 +368,17 @@ export default class Vector {
                 Vector.normalizeAngle(Vector.find2DAngle(a.x, a.y, b.x, b.y))
             );
         }
-        let qb = (b as Vector).subtract(a as Vector);
-        let qc = c.subtract(a as Vector);
-        let n = qb.cross(qc);
+        const qb = (b as Vector).subtract(a as Vector);
+        const qc = c.subtract(a as Vector);
+        const n = qb.cross(qc);
 
-        let unitZ = n.unit();
-        let unitX = qb.unit();
-        let unitY = unitZ.cross(unitX);
+        const unitZ = n.unit();
+        const unitX = qb.unit();
+        const unitY = unitZ.cross(unitX);
 
-        let beta = Math.asin(unitZ.x) || 0;
-        let alpha = Math.atan2(-unitZ.y, unitZ.z) || 0;
-        let gamma = Math.atan2(-unitY.x, unitX.x) || 0;
+        const beta = Math.asin(unitZ.x) || 0;
+        const alpha = Math.atan2(-unitZ.y, unitZ.z) || 0;
+        const gamma = Math.atan2(-unitY.x, unitX.x) || 0;
 
         return new Vector(Vector.normalizeAngle(alpha), Vector.normalizeAngle(beta), Vector.normalizeAngle(gamma));
     }

@@ -67,8 +67,8 @@ export const calcLegs = (lm: Results) => {
     };
 
     //Modify Rotations slightly for more natural movement
-    let rightLegRig = rigLeg(UpperLeg.r, LowerLeg.r, RIGHT);
-    let leftLegRig = rigLeg(UpperLeg.l, LowerLeg.l, LEFT);
+    const rightLegRig = rigLeg(UpperLeg.r, LowerLeg.r, RIGHT);
+    const leftLegRig = rigLeg(UpperLeg.l, LowerLeg.l, LEFT);
 
     return {
         //Scaled
@@ -95,15 +95,15 @@ export const calcLegs = (lm: Results) => {
  * @param {Side} side : left or right
  */
 export const rigLeg = (UpperLeg: Vector, LowerLeg: Vector, side: Side = RIGHT) => {
-    let invert = side === RIGHT ? 1 : -1;
+    const invert = side === RIGHT ? 1 : -1;
     
-    let rigedUpperLeg = new Euler({
+    const rigedUpperLeg = new Euler({
         x: clamp(UpperLeg.x, 0, 0.5) * PI,
         y: clamp(UpperLeg.y, -0.25, 0.25) * PI,
         z: clamp(UpperLeg.z, -0.5, 0.5) * PI + invert * offsets.upperLeg.z,
         rotationOrder: "YZX",
     });
-    let rigedLowerLeg = new Euler({
+    const rigedLowerLeg = new Euler({
         x: LowerLeg.x * PI,
         y: LowerLeg.y * PI,
         z: LowerLeg.z * PI,

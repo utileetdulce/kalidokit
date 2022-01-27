@@ -6,7 +6,6 @@ import { PI } from "./../constants";
 
 /** Class representing hand solver. */
 export class HandSolver {
-    constructor() {}
     /**
      * Calculates finger and wrist as euler rotations
      * @param {Array} lm : array of 3D hand vectors from tfjs or mediapipe
@@ -17,12 +16,12 @@ export class HandSolver {
             console.error("Need Hand Landmarks");
             return;
         }
-        let palm = [
+        const palm = [
             new Vector(lm[0]),
             new Vector(lm[side === RIGHT ? 17 : 5]),
             new Vector(lm[side === RIGHT ? 5 : 17]),
         ];
-        let handRotation = Vector.rollPitchYaw(palm[0], palm[1], palm[2]);
+        const handRotation = Vector.rollPitchYaw(palm[0], palm[1], palm[2]);
         handRotation.y = handRotation.z;
         handRotation.y -= side === LEFT ? 0.4 : 0.4;
 
@@ -58,8 +57,8 @@ export class HandSolver {
 const rigFingers = (hand: THandUnsafe<typeof side>, side: Side = RIGHT): THand<typeof side> => {
     // Invert modifier based on left vs right side
     const invert = side === RIGHT ? 1 : -1;
-    let digits = ["Ring", "Index", "Little", "Thumb", "Middle"];
-    let segments = ["Proximal", "Intermediate", "Distal"];
+    const digits = ["Ring", "Index", "Little", "Thumb", "Middle"];
+    const segments = ["Proximal", "Intermediate", "Distal"];
 
     hand[side + "Wrist"].x = clamp(hand[side + "Wrist"].x * 2 * invert, -0.3, 0.3); // twist
     hand[side + "Wrist"].y = clamp(
@@ -71,21 +70,21 @@ const rigFingers = (hand: THandUnsafe<typeof side>, side: Side = RIGHT): THand<t
 
     digits.forEach((e) => {
         segments.forEach((j) => {
-            let trackedFinger = hand[side + e + j];
+            const trackedFinger = hand[side + e + j];
 
             if (e === "Thumb") {
                 //dampen thumb rotation depending on segment
-                let dampener = {
+                const dampener = {
                     x: j === "Proximal" ? 2.2 : j === "Intermediate" ? 0 : 0,
                     y: j === "Proximal" ? 2.2 : j === "Intermediate" ? 0.7 : 1,
                     z: j === "Proximal" ? 0.5 : j === "Intermediate" ? 0.5 : 0.5,
                 };
-                let startPos = {
+                const startPos = {
                     x: j === "Proximal" ? 1.2 : j === "Distal" ? -0.2 : -0.2,
                     y: j === "Proximal" ? 1.1 * invert : j === "Distal" ? 0.1 * invert : 0.1 * invert,
                     z: j === "Proximal" ? 0.2 * invert : j === "Distal" ? 0.2 * invert : 0.2 * invert,
                 };
-                let newThumb = { x: 0, y: 0, z: 0 };
+                const newThumb = { x: 0, y: 0, z: 0 };
                 if (j === "Proximal") {
                     newThumb.z = clamp(
                         startPos.z + trackedFinger.z * -PI * dampener.z * invert,

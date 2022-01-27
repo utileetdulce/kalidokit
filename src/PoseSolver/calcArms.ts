@@ -65,8 +65,8 @@ export const calcArms = (lm: Results) => {
     };
 
     //Modify Rotations slightly for more natural movement
-    let rightArmRig = rigArm(UpperArm.r, LowerArm.r, Hand.r, RIGHT);
-    let leftArmRig = rigArm(UpperArm.l, LowerArm.l, Hand.l, LEFT);
+    const rightArmRig = rigArm(UpperArm.r, LowerArm.r, Hand.r, RIGHT);
+    const leftArmRig = rigArm(UpperArm.l, LowerArm.l, Hand.l, LEFT);
 
     return {
         //Scaled
